@@ -6,6 +6,7 @@ commonLabels:
 resources:
 - ../default
 - ../dependencies/quickstart.yaml
+- ../dependencies/scripts
 - ../prometheus
 configMapGenerator:
   - name: mesh-parameters

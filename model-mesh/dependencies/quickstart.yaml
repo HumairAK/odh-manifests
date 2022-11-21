@@ -40,6 +40,11 @@ spec:
       labels:
         app: etcd
     spec:
+      volumes:
+        - name: scripts
+          configMap:
+            name: etcd-scripts
+            defaultMode: 0554
       containers:
         - command:
             - etcd
@@ -51,6 +56,15 @@ spec:
             - /tmp/etcd.data
           image: quay.io/modh/etcd-container:3.2.32-rhel7.9-20221017084818
           name: etcd
+          env:
+            - name: ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: etcd-passwords
+                  key: root
+          volumeMounts:
+            - mountPath: /home/scripts
+              name: scripts
           ports:
             - containerPort: 2379
               name: client
@@ -81,3 +95,10 @@ spec:
             periodSeconds: 5
             successThreshold: 1
             failureThreshold: 3
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - /bin/sh
+                  - -c
+                  - /home/scripts/enable_auth.sh ${ROOT_PASSWORD}
