@@ -18,7 +18,7 @@ metadata:
 spec:
   podSelector:
     matchLabels:
-      app: model-mesh
+      component: model-mesh-etcd
       app.kubernetes.io/part-of: model-mesh
   ingress:
     # etcd communication
