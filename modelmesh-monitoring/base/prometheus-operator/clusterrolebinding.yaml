@@ -1,0 +1,12 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: rhods-prometheus-operator
+roleRef:
+  kind: ClusterRole
+  name: rhods-prometheus-operator
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+  - kind: ServiceAccount
+    namespace: redhat-ods-monitoring
+    name: rhods-prometheus-operator

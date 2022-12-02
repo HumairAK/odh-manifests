@@ -1,0 +1,12 @@
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: rhods-model-monitoring-crb
+subjects:
+  - kind: ServiceAccount
+    name: rhods-model-monitoring-sa
+    namespace: redhat-ods-monitoring
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: prometheus-scraper
