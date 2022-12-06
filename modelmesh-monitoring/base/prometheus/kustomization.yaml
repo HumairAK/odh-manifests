@@ -1,8 +1,9 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- rhods-model-monitoring.yaml
-- role.yaml
+- rhods-prometheus.yaml
 - secret.yaml
 - service.yaml
 - serviceaccount.yaml
+- rbac
+- route.yaml

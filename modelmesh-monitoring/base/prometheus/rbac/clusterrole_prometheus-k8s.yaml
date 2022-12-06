@@ -1,7 +1,11 @@
+# Deploying a RoleBinding in a given Namespace
+# that gives the Prometheus SA the following role
+# will allow that Prometheus to scrape Services
+# in that RoleBinding's Namespace
 apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
+kind: ClusterRole
 metadata:
-  name: prometheus-k8s
+  name: prometheus-ns-access
 rules:
   - apiGroups:
       - ''

@@ -3,5 +3,4 @@ kind: Kustomization
 resources:
 - serviceaccount.yaml
 - deployment.yaml
-- clusterrolebinding.yaml
-- clusterrole.yaml
+- rbac

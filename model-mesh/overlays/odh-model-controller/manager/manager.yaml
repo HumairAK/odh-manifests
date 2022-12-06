@@ -33,7 +33,12 @@ spec:
         - /manager
         args:
         - --leader-elect
+        - '--monitoring-namespace'
+        - '$(MONITORING_NS)'
         image: $(odh-model-controller)
+        env:
+          - name: MONITORING_NS
+            value: $(monitoring-namespace)
         name: manager
         imagePullPolicy: Always
         securityContext:

@@ -5,13 +5,13 @@ metadata:
     prometheus: rhods-model-monitoring
   name: rhods-model-monitoring
 spec:
-  serviceAccountName: rhods-model-monitoring-sa
+  serviceAccountName: prometheus-custom
   listenLocal: true
   containers:
     - args:
         - '-https-address=:8443'
         - '-provider=openshift'
-        - '-openshift-service-account=rhods-model-monitoring-sa'
+        - '-openshift-service-account=prometheus-custom'
         - '-upstream=http://localhost:9090'
         - '-tls-cert=/etc/tls/private/tls.crt'
         - '-tls-key=/etc/tls/private/tls.key'
@@ -34,6 +34,10 @@ spec:
   serviceMonitorSelector:
     matchLabels:
       modelmesh-service: modelmesh-serving
+  serviceMonitorNamespaceSelector:
+    matchExpressions:
+      - key: kubernetes.io/metadata.name
+        operator: Exists
   volumes:
     - name: prometheus-tls
       secret:

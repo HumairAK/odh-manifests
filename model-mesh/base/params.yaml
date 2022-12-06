@@ -7,3 +7,5 @@ varReference:
   apiVersion: apps/v1
 - path: data
   kind: ConfigMap
+- path: spec/template/spec/containers[]/env/value
+  kind: Deployment

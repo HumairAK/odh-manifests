@@ -1,0 +1,15 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: rhods-model-monitoring
+  labels:
+    prometheus: rhods-model-monitoring
+spec:
+  to:
+    kind: Service
+    name: rhods-model-monitoring
+  port:
+    targetPort: https
+  tls:
+    termination: reencrypt
+    insecureEdgeTerminationPolicy: Redirect
