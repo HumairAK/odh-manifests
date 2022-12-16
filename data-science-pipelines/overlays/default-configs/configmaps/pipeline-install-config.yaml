@@ -9,7 +9,7 @@ data:
   cacheImage: registry.access.redhat.com/ubi8/ubi-minimal
   cacheNodeRestrictions: "false"
   cronScheduleTimezone: UTC
-  dbHost: mysql
+  dbHost: cluster1-haproxy.ha-testing.svc.cluster.local
   dbPort: "3306"
   defaultPipelineRoot: ""
   mlmdDb: mlpipeline
