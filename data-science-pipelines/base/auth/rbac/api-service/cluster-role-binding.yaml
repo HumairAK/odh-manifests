@@ -1,12 +1,12 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: ml-pipeline
+  name: ds-pipeline
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: ml-pipeline
+  name: ds-pipeline
 subjects:
 - kind: ServiceAccount
-  name: ml-pipeline
-  namespace: kubeflow
+  name: ds-pipeline
+  namespace: redhat-ods-applications

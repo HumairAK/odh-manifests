@@ -3,4 +3,3 @@ kind: Kustomization
 resources:
 - api-service
 - pipelines-ui
-#- user-ns
