@@ -3,7 +3,7 @@ data:
   apply_tekton_custom_resource: "true"
   archive_logs: "false"
   artifact_bucket: mlpipeline
-  artifact_endpoint: minio-service:9000
+  artifact_endpoint: minio-service.redhat-ods-applications.svc.cluster.local:9000
   artifact_endpoint_scheme: http://
   artifact_image: quay.io/hukhan/odh-ml-pipelines-artifact-manager-container-live:1.20.1-9-6336-1
   artifact_script: |-

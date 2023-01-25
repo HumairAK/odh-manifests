@@ -100,6 +100,8 @@ vars:
     fieldref:
       fieldpath: data.ds_pipelines_ui_configuration
 
+patchesStrategicMerge:
+  - auth/oauth-patch.yaml
 configurations:
   - params.yaml
 
