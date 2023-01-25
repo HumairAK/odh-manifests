@@ -153,7 +153,7 @@ spec:
             - name: MULTIUSER
               value: 'true'
             - name: KUBEFLOW_USERID_HEADER
-              value: kubeflow-userid
+              value: X-Forwarded-User
             - name: KUBEFLOW_USERID_PREFIX
           image: api-server
           imagePullPolicy: Always

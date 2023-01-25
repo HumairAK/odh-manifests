@@ -19,7 +19,7 @@ spec:
             - --tls-cert=/etc/tls/private/tls.crt
             - --tls-key=/etc/tls/private/tls.key
             - --cookie-secret=SECRET
-            - '--openshift-delegate-urls={"/": {"resource": "services", "verb": "get"}}'
+            - '--openshift-delegate-urls={"/": {"resource": "namespaces", "verb": "get"}}'
             - --skip-auth-regex='(^/metrics|^/apis/v1beta1/healthz)'
             - --pass-user-headers="true" # Header: X-Forwarded-User
           image: registry.redhat.io/openshift4/ose-oauth-proxy:v4.8

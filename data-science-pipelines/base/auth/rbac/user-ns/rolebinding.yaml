@@ -8,4 +8,4 @@ roleRef:
   name: view-runs
 subjects:
   - kind: User
-    name: "hukhan@redhat.com"
+    name: REPLACE-USER
