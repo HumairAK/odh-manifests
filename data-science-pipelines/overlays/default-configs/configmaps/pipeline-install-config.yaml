@@ -9,7 +9,7 @@ data:
   cacheImage: registry.access.redhat.com/ubi8/ubi-minimal
   cacheNodeRestrictions: "false"
   cronScheduleTimezone: UTC
-  dbHost: cluster1-haproxy.percona-xtradb.svc.cluster.local
+  dbHost: mysql
   dbPort: "3306"
   defaultPipelineRoot: ""
   mlmdDb: mlpipeline
