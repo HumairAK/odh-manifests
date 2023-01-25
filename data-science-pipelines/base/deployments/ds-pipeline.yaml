@@ -150,7 +150,11 @@ spec:
                 secretKeyRef:
                   key: port
                   name: $(artifact_secret_name)
-
+            - name: MULTIUSER
+              value: 'true'
+            - name: KUBEFLOW_USERID_HEADER
+              value: kubeflow-userid
+            - name: KUBEFLOW_USERID_PREFIX
           image: api-server
           imagePullPolicy: Always
           name: ds-pipeline-api-server

@@ -90,6 +90,11 @@ spec:
               value: ds-pipeline
             - name: ML_PIPELINE_SERVICE_PORT
               value: '8888'
+            - name: KUBEFLOW_USERID_HEADER
+              value: kubeflow-userid
+            - name: KUBEFLOW_USERID_PREFIX
+            - name: ENABLE_AUTHZ
+              value: 'true'
           image: frontend
           imagePullPolicy: IfNotPresent
           livenessProbe:
