@@ -1,0 +1,24 @@
+apiVersion: kfdef.apps.kubeflow.org/v1
+kind: KfDef
+metadata:
+  name: rhods-data-science-pipelines
+  namespace: redhat-ods-applications
+spec:
+  applications:
+    - kustomizeConfig:
+        parameters:
+          - name: database_secret
+            value: mysql-secret
+        overlays:
+          - metadata-store-mariadb
+          - ds-pipeline-ui
+          - object-store-minio
+          - integration-odhdashboard
+          - default-configs
+        repoRef:
+          name: manifests
+          path: data-science-pipelines
+      name: data-science-pipelines
+  repos:
+    - name: manifests
+      uri: https://github.com/HumairAK/odh-manifests/tarball/rhods-auth
