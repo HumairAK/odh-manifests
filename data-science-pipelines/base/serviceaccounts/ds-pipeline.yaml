@@ -1,6 +1,8 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
+  annotations:
+    serviceaccounts.openshift.io/oauth-redirectreference.primary: '{"kind":"OAuthRedirectReference","apiVersion":"v1","reference":{"kind":"Service","name":"ds-pipeline"}}'
   labels:
     application-crd-id: data-science-pipelines
   name: ds-pipeline

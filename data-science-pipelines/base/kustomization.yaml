@@ -3,6 +3,9 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
+  # enable multi-user rbac
+  - auth/rbac
+
   # CustomResourceDefinitions
   - ./customresourcedefinitions/viewers.yaml
   - ./customresourcedefinitions/scheduledworkflows.yaml
@@ -93,22 +96,21 @@ vars:
     fieldref:
       fieldpath: data.ds_pipelines_ui_configuration
 
+patchesStrategicMerge:
+  - auth/oauth-patch.yaml
 configurations:
   - params.yaml
 
 images:
   - name: persistenceagent
-    newName: quay.io/internaldatahub/persistenceagent
-    newTag: 1.1.0
+    newName: quay.io/hukhan/odh-ml-pipelines-persistenceagent-container-live
+    newTag: 1.20.1-9-6336-1
   - name: scheduledworkflow
-    newName: quay.io/internaldatahub/scheduledworkflow
-    newTag: 1.1.0
+    newName: quay.io/hukhan/odh-ml-pipelines-scheduledworkflow-container-live
+    newTag: 1.20.1-9-6336-1
   - name: viewer-crd-controller
-    newName: gcr.io/ml-pipeline/viewer-crd-controller
-    newTag: 1.7.0
-  - name: visualization-server
-    newName: gcr.io/ml-pipeline/visualization-server
-    newTag: 1.7.0
+    newName: quay.io/hukhan/odh-ml-pipelines-viewercontroller-container-live
+    newTag: 1.20.1-9-6336-1
   - name: api-server
-    newName: quay.io/internaldatahub/api-server
-    newTag: 1.1.0
+    newName: quay.io/hukhan/odh-ml-pipelines-api-server-container-live
+    newTag: 1.20.1-9-6336-1
