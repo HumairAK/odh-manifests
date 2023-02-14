@@ -42,6 +42,66 @@ spec:
       labels:
         component: model-mesh-etcd
     spec:
+      volumes:
+        - name: scripts
+          configMap:
+            name: etcd-scripts
+            defaultMode: 0554
+      initContainers: #TODO: merge into one initContainer
+        - name: etcd-password-creator
+          image: quay.io/openshift/origin-cli
+          env:
+            - name: DEPLOYMENT_NAMESPACE
+              value: opendatahub #TODO: Parameterize
+          command: ["/bin/bash", "-c", "--"]
+          args:
+            - |
+              oc login --token=TOKEN --server=https://openshift.default.svc.cluster.local --insecure-skip-tls-verify
+              oc project $(DEPLOYMENT_NAMESPACE)
+              ETC_ROOT_PSW=$(cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 32 | head -n 1)
+
+              echo "creating etcd passwords"
+
+              cat <<EOF | oc apply -f -
+                apiVersion: v1
+                kind: Secret
+                metadata:
+                  name: etcd-passwords
+                stringData:
+                  root: $ETC_ROOT_PSW
+              EOF 
+        - name: model-serving-etcd-creator
+          image: quay.io/openshift/origin-cli
+          env:
+            - name: DEPLOYMENT_NAMESPACE
+              value: opendatahub #TODO: Parameterize
+            - name: etcd-pass 
+              valueFrom:
+                secretKeyRef:
+                  name: etcd-passwords
+                  key: root
+          command: ["/bin/bash", "-c", "--"]
+          args:
+            - |
+              oc login --token=TOKEN --server=https://openshift.default.svc.cluster.local --insecure-skip-tls-verify
+              oc project $(DEPLOYMENT_NAMESPACE)
+              echo "creating secret model-serving-etcd"
+
+              echo "creating etcd-secrets.yaml"
+              cat <<EOF | oc apply -f -
+                apiVersion: v1
+                kind: Secret
+                metadata:
+                  name: model-serving-etcd
+                stringData:
+                  etcd_connection: |
+                    {
+                      "endpoints": "http://etcd:2379",
+                      "root_prefix": "modelmesh-serving",
+                      "userid": "root",
+                      "password": "$(etcd-pass)"
+                    }
+              EOF
       containers:
         - command:
             - etcd
@@ -51,8 +111,17 @@ spec:
             - http://0.0.0.0:2379
             - '--data-dir'
             - /tmp/etcd.data
-          image: quay.io/coreos/etcd:v3.5.4
+          image: registry.redhat.io/rhel7/etcd@sha256:d3495b263b103681f1b09a558be43c21989bfc269eb90f84c2609042cebdc626
           name: etcd
+          env:
+            - name: ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: etcd-passwords
+                  key: root
+          volumeMounts:
+            - mountPath: /home/scripts
+              name: scripts
           ports:
             - containerPort: 2379
               name: client
@@ -60,15 +129,70 @@ spec:
             - containerPort: 2380
               name: server
               protocol: TCP
+          resources:  # ref: https://github.com/coreos/etcd-operator/blob/master/doc/user/spec_examples.md#three-member-cluster-with-resource-requirement
+            limits:
+              cpu: 300m
+              memory: 200Mi
+            requests:
+              cpu: 200m
+              memory: 100Mi
+          livenessProbe:
+            tcpSocket:
+              port: 2379
+            initialDelaySeconds: 30
+            timeoutSeconds: 1
+            periodSeconds: 5
+            successThreshold: 1
+            failureThreshold: 3
+          readinessProbe:
+            tcpSocket:
+              port: 2379
+            initialDelaySeconds: 5
+            timeoutSeconds: 1
+            periodSeconds: 5
+            successThreshold: 1
+            failureThreshold: 3
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - /bin/sh
+                  - -c
+                  - /home/scripts/enable_auth.sh ${ROOT_PASSWORD}
+      serviceAccountName: etcd-serviceaccount
 ---
 apiVersion: v1
-kind: Secret
+kind: ServiceAccount
 metadata:
-  name: model-serving-etcd
-stringData:
-  etcd_connection: |
-    {
-      "endpoints": "http://etcd:2379",
-      "root_prefix": "modelmesh-serving"
-    }
-
+  name: etcd-serviceaccount
+  namespace: opendatahub #TODO: parameterize
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: etcd-role
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - secrets
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: etcd-clusterrolebinding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: etcd-role
+subjects:
+  - kind: ServiceAccount
+    name: etcd-serviceaccount
