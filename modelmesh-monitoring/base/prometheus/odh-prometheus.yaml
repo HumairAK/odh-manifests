@@ -8,6 +8,9 @@ spec:
   serviceAccountName: prometheus-custom
   listenLocal: true
   containers:
+    - env:
+      - name: DEPLOYMENT_NAMESPACE
+        value: $(deployment-namespace)
     - args:
         - '-https-address=:8443'
         - '-provider=openshift'
@@ -16,8 +19,8 @@ spec:
         - '-tls-cert=/etc/tls/private/tls.crt'
         - '-tls-key=/etc/tls/private/tls.key'
         - '--cookie-secret-file=/etc/oauth/config/cookie_secret'
-        - '--openshift-sar={"namespace": "opendatahub", "resource": "services", "verb": "get"}' #TODO: parameterize namespace
-        - '--openshift-delegate-urls={"/": {"namespace": "opendatahub", "resource": "services", "verb": "get"}}' #TODO: parameterize namespace
+        - '--openshift-sar={"namespace": "$(DEPLOYMENT_NAMESPACE)", "resource": "services", "verb": "get"}' 
+        - '--openshift-delegate-urls={"/": {"namespace": "$(DEPLOYMENT_NAMESPACE)", "resource": "services", "verb": "get"}}' 
         - '-skip-auth-regex=^/metrics'
       image: 'registry.redhat.io/openshift4/ose-oauth-proxy@sha256:4bef31eb993feb6f1096b51b4876c65a6fb1f4401fee97fa4f4542b6b7c9bc46'
       imagePullPolicy: Always

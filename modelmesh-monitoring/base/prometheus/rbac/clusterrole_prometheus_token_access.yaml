@@ -5,7 +5,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: prometheus-custom
-    namespace: opendatahub #$(deployment-namespace)
+    namespace: $(deployment-namespace)
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
