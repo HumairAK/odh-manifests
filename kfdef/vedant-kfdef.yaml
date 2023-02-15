@@ -1,0 +1,38 @@
+apiVersion: kfdef.apps.kubeflow.org/v1
+kind: KfDef
+metadata:
+  name: odh-modelmesh
+  namespace: opendatahub
+spec:
+  applications:
+    - kustomizeConfig:
+        repoRef:
+          name: manifests
+          path: odh-common
+      name: odh-common
+    - kustomizeConfig:
+        parameters:
+          - name: monitoring-namespace
+            value: opendatahub
+          - name: meshnamespace
+            value: opendatahub
+        overlays:
+          - odh-model-controller
+        repoRef:
+          name: manifests
+          path: model-mesh
+      name: model-mesh
+    - kustomizeConfig:
+        parameters:
+          - name: deployment-namespace
+            value: opendatahub
+          - name: monitoring-namespace
+            value: opendatahub
+        repoRef:
+          name: manifests
+          path: modelmesh-monitoring
+      name: modelmesh-monitoring
+  repos:
+    - name: manifests
+      uri: https://api.github.com/repos/HumairAK/odh-manifests/tarball/vedant-params
+  version: master

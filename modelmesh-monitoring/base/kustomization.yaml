@@ -8,6 +8,8 @@ configMapGenerator:
   - name: model-monitoring-parameters
     envs:
       - params.env
+configurations:
+  - params.yaml
 vars:
   - name: deployment-namespace
     objref:

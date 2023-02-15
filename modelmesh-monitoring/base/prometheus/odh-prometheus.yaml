@@ -8,9 +8,6 @@ spec:
   serviceAccountName: prometheus-custom
   listenLocal: true
   containers:
-    - env:
-      - name: DEPLOYMENT_NAMESPACE
-        value: $(deployment-namespace)
     - args:
         - '-https-address=:8443'
         - '-provider=openshift'
@@ -24,6 +21,9 @@ spec:
         - '-skip-auth-regex=^/metrics'
       image: 'registry.redhat.io/openshift4/ose-oauth-proxy@sha256:4bef31eb993feb6f1096b51b4876c65a6fb1f4401fee97fa4f4542b6b7c9bc46'
       imagePullPolicy: Always
+      env:
+        - name: DEPLOYMENT_NAMESPACE
+          value: $(deployment-namespace)
       name: oauth-proxy
       ports:
         - containerPort: 8443
