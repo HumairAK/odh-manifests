@@ -1,5 +1,5 @@
 modelMeshImage:
-  name: quay.io/tteofili/modelmesh
+  name: quay.io/trustyai/modelmesh
   tag: v0.0.6
   env:
     - name: MM_PAYLOAD_PROCESSORS
