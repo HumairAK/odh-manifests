@@ -66,5 +66,10 @@ spec:
   version: master
 
 ```
-
+Optionally, you can include the TrustyAI Model Mesh overlay into the `spec/applications/kustomizeConfig/overlays` field, if you'd like to compute fairness metrics for the served models:
+```
+overlays:
+  - odh-model-controller
+  - odh-trustyai-modelmesh
+```
 3. You can now create a new project and create an InferenceService CR.
