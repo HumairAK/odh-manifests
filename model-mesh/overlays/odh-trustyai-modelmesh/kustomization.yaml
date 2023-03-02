@@ -1,4 +1,5 @@
 bases:
   - ../../base
+  - ./trustyai-service
 configurations:
   - params.yaml
