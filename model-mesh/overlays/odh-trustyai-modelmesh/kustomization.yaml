@@ -1,5 +1,4 @@
 resources:
-  - ../../default
   - ./base
 patchesStrategicMerge:
   - configmap_patch.yaml
