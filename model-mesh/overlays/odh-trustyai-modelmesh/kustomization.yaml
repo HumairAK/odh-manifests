@@ -5,4 +5,4 @@ configMapGenerator:
     - name: model-serving-config-defaults
       behavior: merge
       files:
-        - config-defaults.yaml
+        - config-defaults-patch.yaml
