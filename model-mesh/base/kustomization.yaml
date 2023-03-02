@@ -5,6 +5,7 @@ commonLabels:
   app.kubernetes.io/part-of: model-mesh
 resources:
 - ../default
+- ../crd
 - ../dependencies/quickstart.yaml
 - ../runtimes
 - ../prometheus
