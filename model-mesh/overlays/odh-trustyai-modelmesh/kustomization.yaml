@@ -1,7 +1,0 @@
-resources:
-  - ../../default
-patches:
-  - path: configmap_patch.yaml
-    target:
-      kind: ConfigMap
-      name: model-serving-config-defaults
