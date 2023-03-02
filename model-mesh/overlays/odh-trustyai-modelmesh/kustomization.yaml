@@ -1,5 +1,5 @@
 bases:
   - ../../base
   - ./base
-configurations:
+patchesStrategicMerge:
   - params.yaml
