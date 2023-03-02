@@ -3,6 +3,6 @@ resources:
   - ./base
 configMapGenerator:
     - name: model-serving-config-defaults
-      behavior: replace
+      behavior: merge
       files:
         - config-defaults.yaml
