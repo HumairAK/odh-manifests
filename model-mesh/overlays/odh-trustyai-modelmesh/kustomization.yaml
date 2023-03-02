@@ -1,5 +1,4 @@
 resources:
-  - ../../default
   - ./base
 configMapGenerator:
     - name: model-serving-config-defaults
