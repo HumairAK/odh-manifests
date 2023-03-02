@@ -5,4 +5,4 @@ configMapGenerator:
     - name: model-serving-config-defaults
       behavior: replace
       files:
-        - modelmesh_image_patch.yaml
+        - config_defaults.yaml
