@@ -1,8 +1,5 @@
 resources:
   - ../../default
   - ./base
-configMapGenerator:
-    - name: model-serving-config-defaults
-      behavior: merge
-      files:
-        - config-defaults-patch.yaml
+patchesStrategicMerge:
+  - configmap_patch.yaml
