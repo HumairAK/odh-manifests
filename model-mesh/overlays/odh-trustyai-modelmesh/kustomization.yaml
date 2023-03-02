@@ -1,5 +1,6 @@
 resources:
   - ./base
+  - ../../default
 patches:
   - path: configmap_patch.yaml
     target:
