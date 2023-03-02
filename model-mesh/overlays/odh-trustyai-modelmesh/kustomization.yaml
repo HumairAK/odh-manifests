@@ -1,5 +1,5 @@
 bases:
-  - ../../base
+  - ../../default
   - ./base
 configurations:
   - params.yaml
