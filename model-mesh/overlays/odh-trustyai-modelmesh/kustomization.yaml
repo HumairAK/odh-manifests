@@ -1,5 +1,8 @@
-bases:
-  - ../../base
+resources:
+  - ../../default
   - ./base
-configurations:
-  - params.yaml
+configMapGenerator:
+    - name: model-serving-config-defaults
+      behavior: replace
+      files:
+        - modelmesh_image_patch.yaml
