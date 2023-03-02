@@ -5,4 +5,4 @@ configMapGenerator:
     - name: model-serving-config-defaults
       behavior: replace
       files:
-        - config_defaults.yaml
+        - config-defaults.yaml
