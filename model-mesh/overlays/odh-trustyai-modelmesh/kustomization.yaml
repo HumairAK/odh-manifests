@@ -7,8 +7,7 @@ configMapGenerator:
 - files:
   - trustyai-config-defaults.yaml
   name: model-serving-config-trustyai
-generatorOptions:
-  disableNameSuffixHash: true
+namePrefix: trusty-
 patchesStrategicMerge:
   - manager/manager.yaml
 
