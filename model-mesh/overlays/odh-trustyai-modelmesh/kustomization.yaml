@@ -4,7 +4,7 @@ bases:
 - ./base
 configMapGenerator:
 - files:
-  - config-defaults.yaml
+  - trustyai-config-defaults.yaml
   name: model-serving-config-trustyai
 #patchesStrategicMerge:
 #  - manager.yaml
