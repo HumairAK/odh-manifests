@@ -2,12 +2,13 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
 - ./base
-- ./manager
+- ../../manager
 configMapGenerator:
 - files:
   - trustyai-config-defaults.yaml
   name: model-serving-config-trustyai
 generatorOptions:
   disableNameSuffixHash: true
-
+patchesStrategicMerge:
+  - manager/manager.yaml
 
