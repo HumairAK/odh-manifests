@@ -14,7 +14,7 @@ metadata:
     app.kubernetes.io/name: trustyai-service
     app.kubernetes.io/version: 999-SNAPSHOT
     app.openshift.io/runtime: quarkus
-  name: trustyai-service
+  name: service
 spec:
   ports:
     - name: http
@@ -40,7 +40,7 @@ metadata:
     app.openshift.io/runtime: quarkus
     app.kubernetes.io/version: 999-SNAPSHOT
     app.kubernetes.io/name: trustyai-service
-  name: trustyai-service
+  name: service
 spec:
   replicas: 1
   selector:
