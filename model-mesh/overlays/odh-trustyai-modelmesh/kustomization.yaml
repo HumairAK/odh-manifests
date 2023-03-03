@@ -8,5 +8,5 @@ configMapGenerator:
   - trustyai-config-defaults.yaml
   name: model-serving-config-defaults
 patchesStrategicMerge:
-  - manager_patch.yaml
+  - ./manager_patch.yaml
 
