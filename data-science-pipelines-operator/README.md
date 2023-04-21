@@ -29,6 +29,11 @@ DSPO_NS=redhat-ods-applications
 oc new-project ${DSPO_NS}
 ```
 
+Set the latest RHODS version released in the following env var: 
+```bash
+RHODS_VERSION=rhods-1.25
+```
+
 Then deploy the following `KfDef` into the namespace created above:
 
 ```bash
@@ -47,9 +52,12 @@ spec:
         name: data-science-pipelines-operator
    repos:
       - name: manifests
-        uri: "https://github.com/red-hat-data-services/odh-manifests/tarball/master"
+        uri: "https://github.com/red-hat-data-services/odh-manifests/tarball/${RHODS_VERSION}"
 EOF
 ```
+
+> Note: To you use a non-latest release, update RHODS_VERSION, but also update the image tags in `/base/params.env`
+> to point to the version matched with RHODS_VERSION
 
 Confirm the pods are successfully deployed and reach running state:
 
