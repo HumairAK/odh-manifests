@@ -128,8 +128,8 @@ spec:
       # otherwise operator will not deploy DSPA
       s3CredentialsSecret:
         secretName: somesecret-sample
-        accessKey: accesskey
-        secretKey: secretkey
+        accessKey: AWS_ACCESS_KEY_ID
+        secretKey: AWS_SECRET_ACCESS_KEY
 #    externalStorage:
 #      host: minio.com
 #      port: "9092"
@@ -157,12 +157,6 @@ status:
       lastTransitionTime: '2023-02-02T21:00:00Z'
       reason: MinimumReplicasAvailable
       message: 'some message'
-    - type: MLPIpelinesUIReady
-      status: "True"
-      observedGeneration: 4
-      lastTransitionTime: '2023-02-02T21:00:00Z'
-      reason: MinimumReplicasAvailable  # DeploymentDisabled
-      message: 'some message'
     - type: PersistenceAgentReady
       status: "True"
       observedGeneration: 4
@@ -175,18 +169,3 @@ status:
       lastTransitionTime: '2023-02-02T21:00:00Z'
       reason: MinimumReplicasAvailable
       message: 'some message'
-    # Do we need to do this?? API Server application already
-    # checks for db/storage connectivity, and pod will fail to come up
-    # in such a case.
-    - type: DatabaseReady
-      status: "True"
-      observedGeneration: 4
-      lastTransitionTime: '2023-02-02T21:00:00Z'
-      reason: DataBaseUnreachable  # DataBaseFailedToDeploy, DataBaseReady
-      message: '500 gateway error received'
-    - type: ObjectStorageReady
-      status: "True"
-      observedGeneration: 4
-      lastTransitionTime: '2023-02-02T21:00:00Z'
-      reason: ObjectStorageUnreachable  # ObjectStorageFailedToDeploy, ObjectStorageReady
-      message: 'host unreachable'
